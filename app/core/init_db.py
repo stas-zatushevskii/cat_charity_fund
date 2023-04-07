@@ -3,6 +3,7 @@ import contextlib
 from fastapi_users.exceptions import UserAlreadyExists
 from pydantic import EmailStr
 
+from app.core.config import settings
 from app.core.db import get_async_session
 from app.core.user import get_user_db, get_user_manager
 from app.schemas.user import UserCreate
@@ -28,3 +29,13 @@ async def create_user(
                     )
     except UserAlreadyExists:
         pass
+
+
+async def create_first_superuser():
+    if (settings.first_superuser_email is not None and
+            settings.first_superuser_password is not None):
+        await create_user(
+            email=settings.first_superuser_email,
+            password=settings.first_superuser_password,
+            is_superuser=True,
+        ) 
