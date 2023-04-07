@@ -28,11 +28,3 @@ async def create_user(
                     )
     except UserAlreadyExists:
         pass
-
-
-async def create_first_superuser():
-    await create_user(
-        email='STAs20160@yandex.ru',
-        password='123',
-        is_superuser=True,
-    )
