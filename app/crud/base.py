@@ -1,10 +1,12 @@
-from fastapi.encoders import jsonable_encoder
+from datetime import datetime
 from typing import Optional
+
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.models import User
-from datetime import datetime
 from sqlalchemy.sql.expression import not_
+
+from app.models import User
 
 
 class CRUDBase:

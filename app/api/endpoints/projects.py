@@ -1,15 +1,13 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.api.validators import (check_charity_project_before_update,
+                                check_name, check_project_exists,
+                                check_project_invested_amount)
 from app.core.db import get_async_session
-from app.crud.projects import projects_crud
-from app.schemas.projects import ProjectsDB, ProjectsCreate, ProjectsUpdate
 from app.core.user import current_superuser
-from app.api.validators import (
-    check_project_exists,
-    check_project_invested_amount,
-    check_name,
-    check_charity_project_before_update
-)
+from app.crud.projects import projects_crud
+from app.schemas.projects import ProjectsCreate, ProjectsDB, ProjectsUpdate
 from app.services.investment_process import investment_process_project
 
 router = APIRouter()
@@ -23,8 +21,7 @@ router = APIRouter()
 async def get_all_projectss(
         session: AsyncSession = Depends(get_async_session),
 ):
-    all_projects = await projects_crud.get_multi(session)
-    return all_projects
+    return await projects_crud.get_multi(session)
 
 
 @router.post(
@@ -59,10 +56,9 @@ async def update_charity_project(
         session=session,
         charity_project_in=charity_project_in
     )
-    charity_project = await projects_crud.update(
+    return await projects_crud.update(
         db_obj=charity_project_db, obj_in=charity_project_in, session=session
     )
-    return charity_project
 
 
 @router.delete(

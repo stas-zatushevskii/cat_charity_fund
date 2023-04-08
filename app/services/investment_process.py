@@ -1,10 +1,11 @@
+from datetime import datetime
+from typing import Union
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import Donation, CharityProject
-from datetime import datetime
 from app.crud.donations import donatons_crud
 from app.crud.projects import projects_crud
-from typing import Union
+from app.models import CharityProject, Donation
 
 
 def fully_invest(obj: Union[CharityProject, Donation]) -> None:

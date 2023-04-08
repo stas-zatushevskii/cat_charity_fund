@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
+from http import HTTPStatus
 from typing import Optional
-from pydantic import BaseModel, Field, validator
-from fastapi import HTTPException
 
+from fastapi import HTTPException
+from pydantic import BaseModel, Field, validator
 
 CREATED_TIME = (
     datetime.now() + timedelta(minutes=10)
@@ -29,7 +30,7 @@ class DonationsCreate(DonationsBase):
     def int_validator(cls, value: int):
         if value <= 0:
             raise HTTPException(
-                status_code=422,
+                status_code=HTTPStatus.UNPROCESSABLE_ENTITY,
             )
         return value
 

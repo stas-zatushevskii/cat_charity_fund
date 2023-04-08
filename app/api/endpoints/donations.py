@@ -1,13 +1,14 @@
+from typing import Union
+
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.core.db import get_async_session
-from app.crud.donations import donatons_crud
-from app.schemas.donations import DonationsCreate, DonationsDB
-from app.core.user import current_superuser, current_user
-from app.models import User
-from typing import Union
-from app.services.investment_process import investment_process_donation
 
+from app.core.db import get_async_session
+from app.core.user import current_superuser, current_user
+from app.crud.donations import donatons_crud
+from app.models import User
+from app.schemas.donations import DonationsCreate, DonationsDB
+from app.services.investment_process import investment_process_donation
 
 router = APIRouter()
 
@@ -21,8 +22,7 @@ router = APIRouter()
 async def get_all_donations(
         session: AsyncSession = Depends(get_async_session),
 ):
-    all_reservations = await donatons_crud.get_multi(session)
-    return all_reservations
+    return await donatons_crud.get_multi(session)
 
 
 @router.post(
@@ -53,5 +53,4 @@ async def get_all_donations(
         user: User = Depends(current_user),
 ):
     user_id = user.id
-    all_reservations = await donatons_crud.get_donations_by_id(user_id, session)
-    return all_reservations
+    return await donatons_crud.get_donations_by_id(user_id, session)

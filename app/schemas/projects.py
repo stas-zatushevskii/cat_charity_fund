@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Optional
-from pydantic import BaseModel, Field, PositiveInt, Extra
+
+from pydantic import BaseModel, Extra, Field, PositiveInt
 
 CREATED_TIME = (
     datetime.now() + timedelta(minutes=10)
