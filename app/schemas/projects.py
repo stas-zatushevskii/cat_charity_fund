@@ -18,6 +18,7 @@ class ProjectsCreate(BaseModel):
     full_amount: PositiveInt
 
     class Config:
+        # Выкинет ошибку когда какое-либо дополнительное поле попадет в схему
         extra = Extra.forbid
         schema_extra = {
             'example': {
@@ -35,6 +36,7 @@ class ProjectsUpdate(BaseModel):
     full_amount: Optional[PositiveInt]
 
     class Config:
+        # Выкинет ошибку когда какое-либо дополнительное поле попадет в схему
         extra = Extra.forbid
         schema_extra = {
             'example': {
